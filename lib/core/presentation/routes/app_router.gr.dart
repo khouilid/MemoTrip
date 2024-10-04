@@ -14,9 +14,9 @@ import 'package:template/app_update/domain/app_update_status_model.dart' as _i9;
 import 'package:template/app_update/presentation/widget/app_update_dialog.dart'
     as _i1;
 import 'package:template/Features/auth/presentation/sign_in_page.dart' as _i4;
+import 'package:template/Features/Home/presentation/home_page.dart' as _i2;
 import 'package:template/Features/notifications/presentation/notifications_page.dart'
-    as _i2;
-import 'package:template/Features/postes/presentation/list_postes.dart' as _i3;
+    as _i3;
 import 'package:template/Features/splash/splash_page.dart' as _i5;
 import 'package:template/Features/user/presentation/user_page.dart' as _i6;
 
@@ -35,16 +35,16 @@ abstract class $AppRouter extends _i7.RootStackRouter {
         ),
       );
     },
+    HomeRoute.name: (routeData) {
+      return _i7.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i2.HomePage(),
+      );
+    },
     NotificationsRoute.name: (routeData) {
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.NotificationsPage(),
-      );
-    },
-    PostsListScreen.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i3.PostsListScreen(),
+        child: const _i3.NotificationsPage(),
       );
     },
     SignInRoute.name: (routeData) {
@@ -108,7 +108,21 @@ class AppUpdateRequiredRouteArgs {
 }
 
 /// generated route for
-/// [_i2.NotificationsPage]
+/// [_i2.HomePage]
+class HomeRoute extends _i7.PageRouteInfo<void> {
+  const HomeRoute({List<_i7.PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i3.NotificationsPage]
 class NotificationsRoute extends _i7.PageRouteInfo<void> {
   const NotificationsRoute({List<_i7.PageRouteInfo>? children})
       : super(
@@ -117,20 +131,6 @@ class NotificationsRoute extends _i7.PageRouteInfo<void> {
         );
 
   static const String name = 'NotificationsRoute';
-
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i3.PostsListScreen]
-class PostsListScreen extends _i7.PageRouteInfo<void> {
-  const PostsListScreen({List<_i7.PageRouteInfo>? children})
-      : super(
-          PostsListScreen.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PostsListScreen';
 
   static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }

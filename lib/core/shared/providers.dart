@@ -2,18 +2,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../infrastructure/database/isar_database.dart';
+
 import '../infrastructure/helpers/internet_connection.dart';
 import '../presentation/routes/app_router.dart';
 
 /// this is the flutter secure storage provider that we created in the [flutter_secure_storage_provider.dart] file.
 final flutterSecureStorageProvider = Provider<FlutterSecureStorage>(
   (ref) => const FlutterSecureStorage(),
-);
-
-/// this is the isar database provider that we created in the [isar_database.dart] file.
-final isarDatabaseProvider = Provider<IsarDatabase>(
-  (ref) => IsarDatabase(),
 );
 
 /// this is the dio provider that we created in the [dio_provider.dart] file.

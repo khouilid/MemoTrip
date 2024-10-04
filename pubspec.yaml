@@ -6,7 +6,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.1
+  sdk: ^3.4.4
 
 dependencies:
   flutter:
@@ -21,8 +21,8 @@ dependencies:
   dio: ^5.6.0
   flutter_dotenv: ^5.1.0
   hooks_riverpod: ^2.5.2
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
+  # isar: ^3.1.0+1
+  # isar_flutter_libs: ^3.1.0+1
   responsive_framework: ^1.1.1
   flutter_hooks: ^0.20.5
   flutter_secure_storage: ^9.2.2
@@ -53,7 +53,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.4.7
-  isar_generator: ^3.1.0+1
+  # isar_generator: ^3.1.0+1
   json_serializable: ^6.7.1
   lint: ^2.1.2
   riverpod_lint: ^2.1.1
