@@ -1,0 +1,93 @@
+name: template
+description: Template App .
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flex_color_scheme: ^7.3.1
+  encrypt: ^5.0.3
+
+  auto_route: ^7.8.4
+  cupertino_icons: ^1.0.8
+  dartz: ^0.10.1
+  dio: ^5.6.0
+  flutter_dotenv: ^5.1.0
+  hooks_riverpod: ^2.5.2
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  responsive_framework: ^1.1.1
+  flutter_hooks: ^0.20.5
+  flutter_secure_storage: ^9.2.2
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  connectivity_plus: ^6.0.5
+  flutter_svg: ^2.0.10
+  retrofit: ^4.1.0
+  logger: ^2.4.0
+
+  flutter_localizations:
+    sdk: flutter
+  flash: ^3.1.1
+  package_info_plus: ^8.0.2
+  url_launcher: ^6.3.0
+  flutter_animate: ^4.5.0
+  flutter_screenutil: ^5.9.3
+  firebase_messaging: ^15.1.1
+  flutter_local_notifications: ^17.2.2
+  envied: ^0.5.4+1
+
+dev_dependencies:
+  auto_route_generator: ^7.3.2
+  retrofit_generator: ^8.1.0
+  build_runner: ^2.4.6
+  custom_lint: ^0.5.6
+  flutter_gen_runner: ^5.7.0
+  flutter_test:
+    sdk: flutter
+  freezed: ^2.4.7
+  isar_generator: ^3.1.0+1
+  json_serializable: ^6.7.1
+  lint: ^2.1.2
+  riverpod_lint: ^2.1.1
+  mockito: ^5.4.4
+  http_mock_adapter: ^0.6.1
+
+flutter_gen:
+  output: lib/gen/
+  line_length: 80
+  assets:
+    enabled: true
+  fonts:
+    enabled: true
+  integrations:
+    flutter_svg: true
+    lottie: true
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    # - .env.dev
+    # - .env.prod
+    - assets/
+    - assets/icons/languages/
+    - assets/jsons/
+    - assets/fonts/
+    - assets/images/
+
+scripts:
+  init: flutter clean; flutter pub get; flutter gen-l10n; dart run build_runner build -d
+  build: dart run build_runner build -d
+  watch: dart run build_runner watch
+  format: flutter format lib
+  android: flutter build apk --release
+  get: flutter pub get
