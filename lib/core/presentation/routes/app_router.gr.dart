@@ -38,7 +38,7 @@ abstract class $AppRouter extends _i7.RootStackRouter {
     HomeRoute.name: (routeData) {
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.HomePage(),
+        child: _i2.HomePage(),
       );
     },
     NotificationsRoute.name: (routeData) {

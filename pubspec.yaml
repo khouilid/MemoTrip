@@ -43,6 +43,7 @@ dependencies:
   firebase_messaging: ^15.1.1
   flutter_local_notifications: ^17.2.2
   envied: ^0.5.4+1
+  google_maps_flutter: ^2.9.0
 
 dev_dependencies:
   auto_route_generator: ^7.3.2
@@ -83,6 +84,7 @@ flutter:
     - assets/jsons/
     - assets/fonts/
     - assets/images/
+    - assets/json/
 
 scripts:
   init: flutter clean; flutter pub get; flutter gen-l10n; dart run build_runner build -d

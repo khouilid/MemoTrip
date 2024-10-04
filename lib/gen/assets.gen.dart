@@ -25,8 +25,31 @@ class $AssetsImagesGen {
   /// File path: assets/images/favicon.png
   AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
 
+  /// File path: assets/images/onbaording_three.svg
+  SvgGenImage get onbaordingThree =>
+      const SvgGenImage('assets/images/onbaording_three.svg');
+
+  /// File path: assets/images/onbaording_two.svg
+  SvgGenImage get onbaordingTwo =>
+      const SvgGenImage('assets/images/onbaording_two.svg');
+
+  /// File path: assets/images/onboarding_one.svg
+  SvgGenImage get onboardingOne =>
+      const SvgGenImage('assets/images/onboarding_one.svg');
+
   /// List of all assets
-  List<AssetGenImage> get values => [favicon];
+  List<dynamic> get values =>
+      [favicon, onbaordingThree, onbaordingTwo, onboardingOne];
+}
+
+class $AssetsJsonsGen {
+  const $AssetsJsonsGen();
+
+  /// File path: assets/jsons/map_styles.json
+  String get mapStyles => 'assets/jsons/map_styles.json';
+
+  /// List of all assets
+  List<String> get values => [mapStyles];
 }
 
 class $AssetsIconsLanguagesGen {
@@ -44,6 +67,10 @@ class $AssetsIconsLanguagesGen {
   SvgGenImage get germany =>
       const SvgGenImage('assets/icons/languages/germany.svg');
 
+  /// File path: assets/icons/languages/google.svg
+  SvgGenImage get google =>
+      const SvgGenImage('assets/icons/languages/google.svg');
+
   /// File path: assets/icons/languages/nederlands.svg
   SvgGenImage get nederlands =>
       const SvgGenImage('assets/icons/languages/nederlands.svg');
@@ -53,7 +80,8 @@ class $AssetsIconsLanguagesGen {
       const SvgGenImage('assets/icons/languages/spain.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [english, france, germany, nederlands, spain];
+  List<SvgGenImage> get values =>
+      [english, france, germany, google, nederlands, spain];
 }
 
 class Assets {
@@ -61,6 +89,7 @@ class Assets {
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsJsonsGen jsons = $AssetsJsonsGen();
 }
 
 class AssetGenImage {

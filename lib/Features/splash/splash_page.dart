@@ -1,5 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:template/Features/auth/presentation/sign_in_page.dart';
+import 'package:template/core/presentation/managers/color_manager.dart';
+import 'package:template/gen/assets.gen.dart';
 import '/core/presentation/routes/app_router.gr.dart';
 
 @RoutePage()
@@ -47,19 +51,34 @@ class _SplashPageState extends State<SplashPage> {
             const Spacer(flex: 2),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF22A45D),
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+              child:
+                  // Google
+                  SocalButton(
+                press: () {
+                  context.router.replace(HomeRoute());
+                },
+                text: "Connect with Google",
+                color: AppColors.chateauGreen,
+                icon: SvgPicture.asset(
+                  Assets.icons.languages.google.path,
+                  width: 24,
                 ),
-                child: Text("Get Started".toUpperCase()),
               ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     context.router.replace(const SignInRoute());
+              //   },
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: AppColors.pictonBlue,
+              //     foregroundColor: Colors.white,
+              //     minimumSize: const Size(double.infinity, 40),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(8),
+              //     ),
+              //   ),
+              //   child: Text("Get Started"),
             ),
+            // ),
             const Spacer(),
           ],
         ),
@@ -84,8 +103,8 @@ class OnboardContent extends StatelessWidget {
       children: [
         Expanded(
           child: AspectRatio(
-            aspectRatio: 1,
-            child: Image.network(
+            aspectRatio: .8,
+            child: SvgPicture.asset(
               illustration!,
               fit: BoxFit.contain,
             ),
@@ -114,7 +133,7 @@ class DotIndicator extends StatelessWidget {
   const DotIndicator({
     super.key,
     this.isActive = false,
-    this.activeColor = const Color(0xFF22A45D),
+    this.activeColor = AppColors.chateauGreen,
     this.inActiveColor = const Color(0xFF868686),
   });
 
@@ -139,21 +158,21 @@ class DotIndicator extends StatelessWidget {
 // Demo data for our Onboarding screen
 List<Map<String, dynamic>> onBoardingFlow = [
   {
-    "illustration": "https://i.postimg.cc/L43CKddq/Illustrations.png",
-    "title": "All your favorites",
+    "illustration": Assets.images.onboardingOne.path,
+    "title": "Capture Every Moment",
     "text":
-        "Order from the best local restaurants \nwith easy, on-demand delivery.",
+        "Track your travels and document\nmemories with photos, and notes."
   },
   {
-    "illustration": "https://i.postimg.cc/xTjs9sY6/Illustrations-1.png",
-    "title": "Free delivery offers",
+    "illustration": Assets.images.onbaordingTwo.path,
+    "title": "Share Your Journey",
     "text":
-        "Free delivery for new customers via Apple Pay\nand others payment methods.",
+        "Collaborate with others to create a shared\njournal that tells the full story of your adventures."
   },
   {
-    "illustration": "https://i.postimg.cc/6qcYdZVV/Illustrations-2.png",
-    "title": "Choose your food",
+    "illustration": Assets.images.onbaordingThree.path,
+    "title": "Relive and Preserve",
     "text":
-        "Easily find your type of food craving and\nyou’ll get delivery in wide range.",
-  },
+        "Easily organize your memories and turn them\ninto a physical album to keep forever."
+  }
 ];
