@@ -24,7 +24,11 @@ class MemoryCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20),
       color: AppColors.whiteSmoke2,
       child: GestureDetector(
-        onTap: onPress,
+        onTap: () {
+          context.router.push(
+            ImageViewerRoute(memoryModel: memoryModel),
+          );
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,69 +39,62 @@ class MemoryCard extends StatelessWidget {
                   color: const Color(0xFF979797).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: GestureDetector(
-                  onTap: () {
-                    context.router.push(
-                      ImageViewerRoute(memoryModel: memoryModel),
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      CarouselSlider(
-                        options: CarouselOptions(
+                child: Stack(
+                  children: [
+                    CarouselSlider(
+                      options: CarouselOptions(
+                          height: 200,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 1,
+                          initialPage: 0,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          // enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal),
+                      items: memoryModel.images.map((image) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
                             height: 200,
-                            aspectRatio: 16 / 9,
-                            viewportFraction: 1,
-                            initialPage: 0,
-                            autoPlayInterval: const Duration(seconds: 3),
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            // enlargeCenterPage: true,
-                            scrollDirection: Axis.horizontal),
-                        items: memoryModel.images.map((image) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: Image.network(
-                              image,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 200,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    IntrinsicWidth(
+                      child: Container(
+                        margin: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6)
+                            .copyWith(right: 10, top: 1, bottom: 1),
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: AppColors.black.withOpacity(.6),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.location_solid,
+                              color: AppColors.white,
+                              size: 16,
                             ),
-                          );
-                        }).toList(),
-                      ),
-                      IntrinsicWidth(
-                        child: Container(
-                          margin: const EdgeInsets.all(6),
-                          padding: const EdgeInsets.all(6)
-                              .copyWith(right: 10, top: 1, bottom: 1),
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: AppColors.black.withOpacity(.6),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.location_solid,
+                            const SizedBox(width: 4),
+                            Text(
+                              "Tengier, Morocco",
+                              style: const TextStyle(
+                                fontSize: 12,
                                 color: AppColors.white,
-                                size: 16,
                               ),
-                              const SizedBox(width: 4),
-                              Text(
-                                "Tengier, Morocco",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )),
             const SizedBox(height: 8),
             SizedBox(

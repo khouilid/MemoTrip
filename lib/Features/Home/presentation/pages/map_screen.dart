@@ -1,19 +1,21 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:template/Features/Home/presentation/widgets/custom_marker.dart';
+import 'package:template/Features/Home/shared/home_providers.dart';
+import 'package:template/core/presentation/routes/app_router.gr.dart';
 
-class MapPage extends StatefulWidget {
+class MapPage extends ConsumerStatefulWidget {
   @override
-  State<MapPage> createState() => _MapViewState();
+  ConsumerState<MapPage> createState() => _MapViewState();
 }
 
-class _MapViewState extends State<MapPage> {
+class _MapViewState extends ConsumerState<MapPage> {
   /// the controller of the map
   final Completer<GoogleMapController> _mapController = Completer();
 
@@ -26,6 +28,7 @@ class _MapViewState extends State<MapPage> {
   late String _mapStyleString;
 
   List<Map<String, dynamic>> data = [];
+
   @override
   void initState() {
     parseData();
@@ -34,7 +37,14 @@ class _MapViewState extends State<MapPage> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _onBuildCompleted();
+      _onBuildCompleted().listen((marker) {
+        setState(() {
+          _markers[marker.markerId.value] = marker;
+        });
+      }, onError: (error) {
+        print('Error while building map: $error');
+        throw Exception('Error while building map');
+      });
     });
 
     super.initState();
@@ -50,38 +60,57 @@ class _MapViewState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      padding: EdgeInsets.only(
-        bottom: 30,
-      ),
-      myLocationEnabled: false,
-      myLocationButtonEnabled: false,
-      zoomControlsEnabled: false,
-      initialCameraPosition: const CameraPosition(
-        target: LatLng(48.864716, 2.349014), // France
-        zoom: 13.0,
-      ),
-      compassEnabled: true,
-      onMapCreated: (GoogleMapController controller) {
-        _mapController.complete(controller);
-        _mapController.future.then((value) {
-          value.setMapStyle(_mapStyleString);
-        });
-      },
-      onCameraMoveStarted: () {},
-      onCameraIdle: () {},
-      onCameraMove: (CameraPosition position) {},
-      markers: _markers.values.toSet(),
-    );
+    return _isLoaded
+        ? GoogleMap(
+            padding: EdgeInsets.only(
+              bottom: 30,
+            ),
+            myLocationEnabled: false,
+            myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(48.864716, 2.349014), // France
+              zoom: 8.0,
+            ),
+            compassEnabled: true,
+            onMapCreated: (GoogleMapController controller) {
+              _mapController.complete(controller);
+              _mapController.future.then((value) {
+                value.setMapStyle(_mapStyleString);
+              });
+            },
+            onCameraMoveStarted: () {},
+            onCameraIdle: () {},
+            onCameraMove: (CameraPosition position) {},
+            markers: _markers.values.toSet(),
+          )
+        : ListView(
+            children: [
+              for (int i = 0; i < data.length; i++)
+                Transform.translate(
+                  offset: Offset(
+                    -MediaQuery.of(context).size.width * 2,
+                    -MediaQuery.of(context).size.height * 2,
+                  ),
+                  child: RepaintBoundary(
+                    key: data[i]['globalKey'],
+                    child: data[i]['widget'],
+                  ),
+                )
+            ],
+          );
   }
 
-  Future<void> _onBuildCompleted() async {
-    await Future.wait(data.map((value) async {
-      Marker marker = await _generateMarkersFromWidgets(value);
-      setState(() {
-        _markers[marker.markerId.value] = marker;
-      });
-    }));
+  Stream<Marker> _onBuildCompleted() async* {
+    for (var value in data) {
+      try {
+        Marker marker = await _generateMarkersFromWidgets(value);
+        yield marker;
+        setState(() {});
+      } catch (error, stackTrace) {
+        throw Exception('$error $stackTrace');
+      }
+    }
     setState(() {
       _isLoaded = true;
     });
@@ -91,33 +120,38 @@ class _MapViewState extends State<MapPage> {
     RenderRepaintBoundary boundary = datas['globalKey']
         .currentContext
         ?.findRenderObject() as RenderRepaintBoundary;
-    ui.Image image = await boundary.toImage(pixelRatio: 2);
+
+    // Ensure the widget is painted
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    ui.Image image = await boundary.toImage(pixelRatio: .85);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     return Marker(
       markerId: MarkerId(datas['id']),
       position: datas['position'],
       icon: BitmapDescriptor.bytes(byteData!.buffer.asUint8List()),
       onTap: () {
-        // context.pushNamed('offre_remp_detail', pathParameters: {
-        //   'id': datas['id'],
-        //   'isGuest': 'false',
-        // });
+        context.router.push(
+          ImageViewerRoute(memoryModel: datas['model']),
+        );
       },
     );
   }
 
   void parseData() {
-    [
-      1,
-    ].map((e) {
+    ref.read(memoryModelProvider).map((e) {
       Map<String, dynamic> res = {
-        'id': e..toString(),
+        'id': e.id.toString(),
         'globalKey': GlobalKey(),
-        'position': LatLng(48.864716, 2.349014),
-        'widget': CustomMarker(),
+        'position': LatLng(e.latitude, e.longitude),
+        "model": e,
+        'widget': CustomMarker(
+          memoryModel: e,
+        ),
       };
 
       data.add(res);
     }).toList();
+    print(data.length);
   }
 }

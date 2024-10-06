@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:template/Features/Home/domain/memory_model.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
 
 class CustomMarker extends StatelessWidget {
   const CustomMarker({
     super.key,
+    required this.memoryModel,
   });
+  final MemoryModel memoryModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +22,8 @@ class CustomMarker extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(999),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.lightGrey,
-                  borderRadius: BorderRadius.circular(999),
-                ),
-                width: 70,
-                height: 70,
-                child: Image.network(
-                  'https://picsum.photos/200',
+                image: DecorationImage(
+                  image: NetworkImage(memoryModel.images.first),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -40,7 +35,7 @@ class CustomMarker extends StatelessWidget {
               scale: 6,
               child: const Icon(
                 Icons.arrow_drop_down,
-                color: AppColors.white,
+                color: AppColors.chateauGreen,
                 size: 5,
               ),
             ),

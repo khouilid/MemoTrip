@@ -29,61 +29,70 @@ class ImageViewerPage extends HookWidget {
                 return PhotoViewGalleryPageOptions(
                   heroAttributes: PhotoViewHeroAttributes(tag: memoryModel.id),
                   imageProvider: NetworkImage(memoryModel.images[index]),
-                  initialScale: PhotoViewComputedScale.covered,
-                  // heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
+                  initialScale: PhotoViewComputedScale.contained,
                 );
               },
               itemCount: memoryModel.images.length,
-              // loadingBuilder: (context, event) => Center(
-              //   child: Container(
-              //     width: 20.0,
-              //     height: 20.0,
-              //     child: CircularProgressIndicator(
-              //       value: event == null
-              //           ? 0
-              //           : event.cumulativeBytesLoaded / event.expectedTotalBytes,
-              //     ),
-              //   ),
-              // ),
-              // backgroundDecoration: widget.backgroundDecoration,
-              // pageController: widget.pageController,
-              // onPageChanged: onPageChanged,
             )),
           ),
-          Positioned(
-            top: 60,
-            left: 20,
-            child: GestureDetector(
-              onTap: () {
-                context.router.maybePop();
-              },
-              child: Row(
-                children: [
-                  const Icon(
-                    CupertinoIcons.back,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    "Back",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w800),
-                  )
-                ],
+          Visibility(
+            visible: visible.value,
+            child: Positioned(
+              top: 40,
+              left: 20,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  context.router.maybePop();
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      CupertinoIcons.back,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        "Back",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                    // the three dots
+                    IconButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                              AppColors.white.withOpacity(.2)),
+                        ),
+                        onPressed: () {
+                          // remove memory
+                        },
+                        icon: Icon(
+                          CupertinoIcons.ellipsis,
+                          color: AppColors.white,
+                          size: 20,
+                        )),
+                  ],
+                ),
               ),
             ),
           ),
           // add titlle and description in the bottom
           Visibility(
             visible: visible.value,
-            child: Positioned(
-              bottom: 20,
+            child: AnimatedPositioned(
+              bottom: visible.value ? 20 : -MediaQuery.of(context).size.height,
               left: 20,
               right: 20,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * .2,
+              duration: const Duration(seconds: 3), // Slower animation duration
+              curve: Curves.easeInOut, // Smooth animation curve
+              child: AnimatedContainer(
+                transformAlignment: Alignment.bottomCenter,
+                duration: const Duration(seconds: 1),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
