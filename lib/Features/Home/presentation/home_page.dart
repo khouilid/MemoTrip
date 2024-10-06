@@ -1,17 +1,9 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:template/Features/Home/presentation/pages/map_screen.dart';
 import 'package:template/Features/Home/presentation/pages/profile_screen.dart';
 import 'package:template/Features/Home/presentation/pages/timeline_screen.dart';
-import 'package:template/Features/Home/presentation/widgets/custom_marker.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
 import 'package:template/gen/assets.gen.dart';
@@ -27,9 +19,6 @@ class _MapViewState extends State<HomePage>
   /// isLoaded
   int currentPage = 0;
   late TabController tabController;
-
-  /// the style of the map
-  late String _mapStyleString;
 
   List<Map<String, dynamic>> data = [];
   @override

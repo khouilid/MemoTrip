@@ -13,5 +13,7 @@ class AppRouter extends $AppRouter {
     AdaptiveRoute(page: SignInRoute.page, path: "/sign-in"),
     // HomePage
     AdaptiveRoute(page: HomeRoute.page, path: "/home"),
+    // ImageViewerScreen
+    AdaptiveRoute(page: ImageViewerRoute.page, path: "/image-viewer"),
   ];
 }

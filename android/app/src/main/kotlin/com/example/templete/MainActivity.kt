@@ -1,4 +1,4 @@
-package com.example.template
+package com.memotrip.app
 
 import io.flutter.embedding.android.FlutterActivity
 
