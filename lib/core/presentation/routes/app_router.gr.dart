@@ -9,12 +9,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/cupertino.dart' as _i11;
 import 'package:flutter/material.dart' as _i9;
 import 'package:template/app_update/domain/app_update_status_model.dart'
     as _i10;
 import 'package:template/app_update/presentation/widget/app_update_dialog.dart'
     as _i1;
 import 'package:template/Features/auth/presentation/sign_in_page.dart' as _i5;
+import 'package:template/Features/Home/domain/memory_model.dart' as _i12;
 import 'package:template/Features/Home/presentation/home_page.dart' as _i2;
 import 'package:template/Features/Home/presentation/pages/image_viewer_screen.dart'
     as _i3;
@@ -50,7 +52,7 @@ abstract class $AppRouter extends _i8.RootStackRouter {
         routeData: routeData,
         child: _i3.ImageViewerPage(
           key: args.key,
-          galleryItems: args.galleryItems,
+          memoryModel: args.memoryModel,
         ),
       );
     },
@@ -138,14 +140,14 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 /// [_i3.ImageViewerPage]
 class ImageViewerRoute extends _i8.PageRouteInfo<ImageViewerRouteArgs> {
   ImageViewerRoute({
-    _i9.Key? key,
-    required List<String> galleryItems,
+    _i11.Key? key,
+    required _i12.MemoryModel memoryModel,
     List<_i8.PageRouteInfo>? children,
   }) : super(
           ImageViewerRoute.name,
           args: ImageViewerRouteArgs(
             key: key,
-            galleryItems: galleryItems,
+            memoryModel: memoryModel,
           ),
           initialChildren: children,
         );
@@ -159,16 +161,16 @@ class ImageViewerRoute extends _i8.PageRouteInfo<ImageViewerRouteArgs> {
 class ImageViewerRouteArgs {
   const ImageViewerRouteArgs({
     this.key,
-    required this.galleryItems,
+    required this.memoryModel,
   });
 
-  final _i9.Key? key;
+  final _i11.Key? key;
 
-  final List<String> galleryItems;
+  final _i12.MemoryModel memoryModel;
 
   @override
   String toString() {
-    return 'ImageViewerRouteArgs{key: $key, galleryItems: $galleryItems}';
+    return 'ImageViewerRouteArgs{key: $key, memoryModel: $memoryModel}';
   }
 }
 

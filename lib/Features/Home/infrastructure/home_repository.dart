@@ -1,15 +1,15 @@
  
 
 
+import "package:template/Features/Home/infrastructure/home_remote_datasource.dart";
 import "package:template/core/infrastructure/helpers/repository_helper.dart";
 
-import "Home_remote_datasource.dart";
 
 class HomeRepository with RepositoryHelper {
 
-final HomeRemoteDataSource _HomeRemoteDataSource;
+final HomeRemoteDataSource _homeRemoteDataSource;
 
-HomeRepository(this._HomeRemoteDataSource);
+HomeRepository(this._homeRemoteDataSource);
   
          
 }

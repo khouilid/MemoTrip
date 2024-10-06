@@ -38,7 +38,7 @@ class MemoryCard extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     context.router.push(
-                      ImageViewerRoute(galleryItems: memoryModel.images),
+                      ImageViewerRoute(memoryModel: memoryModel),
                     );
                   },
                   child: Stack(
