@@ -54,7 +54,7 @@ final lightTheme = FlexThemeData.light(
   useMaterial3: true,
   swapLegacyOnMaterial3: true,
   scaffoldBackground: const Color(0xffF3F5F7),
-  fontFamily: "FontFamily.roboto",
+  fontFamily: "FontFamily.popins",
   surface: const Color(0xffF3F5F7),
   onPrimary: const Color(0xffF3F5F7),
 );

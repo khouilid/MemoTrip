@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const chateauGreen = Color(0xFF22A45D);
+  // 0xFFF5F6F9
+  static const whiteSmoke2 = Color(0xFFF5F6F9);
   static const curiousBlue = Color(0xff25A5DC);
   static const pictonBlue = Color(0xFF42A4DF);
   static const lightBlue = Color(0xFFD1EEFF);

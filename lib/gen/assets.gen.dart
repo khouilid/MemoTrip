@@ -55,6 +55,14 @@ class $AssetsJsonsGen {
 class $AssetsIconsLanguagesGen {
   const $AssetsIconsLanguagesGen();
 
+  /// File path: assets/icons/languages/calendar.svg
+  SvgGenImage get calendar =>
+      const SvgGenImage('assets/icons/languages/calendar.svg');
+
+  /// File path: assets/icons/languages/earth.svg
+  SvgGenImage get earth =>
+      const SvgGenImage('assets/icons/languages/earth.svg');
+
   /// File path: assets/icons/languages/english.svg
   SvgGenImage get english =>
       const SvgGenImage('assets/icons/languages/english.svg');
@@ -71,17 +79,44 @@ class $AssetsIconsLanguagesGen {
   SvgGenImage get google =>
       const SvgGenImage('assets/icons/languages/google.svg');
 
+  /// File path: assets/icons/languages/home.svg
+  SvgGenImage get home => const SvgGenImage('assets/icons/languages/home.svg');
+
   /// File path: assets/icons/languages/nederlands.svg
   SvgGenImage get nederlands =>
       const SvgGenImage('assets/icons/languages/nederlands.svg');
+
+  /// File path: assets/icons/languages/profile.svg
+  SvgGenImage get profile =>
+      const SvgGenImage('assets/icons/languages/profile.svg');
+
+  /// File path: assets/icons/languages/search.svg
+  SvgGenImage get search =>
+      const SvgGenImage('assets/icons/languages/search.svg');
 
   /// File path: assets/icons/languages/spain.svg
   SvgGenImage get spain =>
       const SvgGenImage('assets/icons/languages/spain.svg');
 
+  /// File path: assets/icons/languages/timeline.svg
+  SvgGenImage get timeline =>
+      const SvgGenImage('assets/icons/languages/timeline.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values =>
-      [english, france, germany, google, nederlands, spain];
+  List<SvgGenImage> get values => [
+        calendar,
+        earth,
+        english,
+        france,
+        germany,
+        google,
+        home,
+        nederlands,
+        profile,
+        search,
+        spain,
+        timeline
+      ];
 }
 
 class Assets {

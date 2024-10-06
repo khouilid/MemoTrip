@@ -16,7 +16,7 @@ class SocalButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const padding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+    const padding = EdgeInsets.symmetric(horizontal: 16, vertical: 10);
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -30,7 +30,7 @@ class SocalButton extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(4),
               height: 28,
               width: 28,
               decoration: const BoxDecoration(
@@ -41,10 +41,10 @@ class SocalButton extends StatelessWidget {
             ),
             const Spacer(flex: 2),
             Text(
-              text.toUpperCase(),
+              text,
               style: Theme.of(context)
                   .textTheme
-                  .bodySmall!
+                  .bodyLarge!
                   .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
             ),
             const Spacer(flex: 3),

@@ -9,7 +9,6 @@ void main() async {
   /// This function is used to ensure that the app is initialized before it is run.
   WidgetsFlutterBinding.ensureInitialized();
 
-
   registerErrorHandlers();
 
   /// This function is used to set the app orientation to portrait mode only.
@@ -19,15 +18,14 @@ void main() async {
   runApp(const ProviderScope(child: AppWidget()));
 }
 
-
 void registerErrorHandlers() {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError(details);
-    Logger().log(Level.warning,
-        "FlutterErrorDetails (RegisterErrorHandlers) |\n${details}");
+    // Logger().log(Level.warning,
+    //     "FlutterErrorDetails (RegisterErrorHandlers) |\n${details}");
   };
   PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
-    Logger().log(Level.error, "Main (RegisterErrorHandlers) |\n${stack}");
+    // Logger().log(Level.error, "Main (RegisterErrorHandlers) |\n${stack}");
 
     return true;
   };

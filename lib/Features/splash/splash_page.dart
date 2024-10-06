@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:template/Features/auth/presentation/sign_in_page.dart';
+import 'package:template/Features/splash/widgets/social_botton.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
 import 'package:template/gen/assets.gen.dart';
 import '/core/presentation/routes/app_router.gr.dart';
@@ -50,10 +50,10 @@ class _SplashPageState extends State<SplashPage> {
             ),
             const Spacer(flex: 2),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 26),
               child:
                   // Google
-                  SocalButton(
+              SocalButton(
                 press: () {
                   context.router.replace(HomeRoute());
                 },
@@ -64,19 +64,6 @@ class _SplashPageState extends State<SplashPage> {
                   width: 24,
                 ),
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     context.router.replace(const SignInRoute());
-              //   },
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: AppColors.pictonBlue,
-              //     foregroundColor: Colors.white,
-              //     minimumSize: const Size(double.infinity, 40),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(8),
-              //     ),
-              //   ),
-              //   child: Text("Get Started"),
             ),
             // ),
             const Spacer(),
@@ -160,8 +147,7 @@ List<Map<String, dynamic>> onBoardingFlow = [
   {
     "illustration": Assets.images.onboardingOne.path,
     "title": "Capture Every Moment",
-    "text":
-        "Track your travels and document\nmemories with photos, and notes."
+    "text": "Track your travels and document\nmemories with photos, and notes."
   },
   {
     "illustration": Assets.images.onbaordingTwo.path,
