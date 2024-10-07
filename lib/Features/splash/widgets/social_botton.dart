@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SocalButton extends StatelessWidget {
   final Color color;
   final String text;
-  final Widget icon;
+  final Widget? icon;
   final GestureTapCallback press;
 
   const SocalButton({
@@ -21,6 +21,7 @@ class SocalButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          elevation: 0,
           padding: padding,
           backgroundColor: color,
           shape: const RoundedRectangleBorder(
@@ -33,19 +34,22 @@ class SocalButton extends StatelessWidget {
               padding: const EdgeInsets.all(4),
               height: 28,
               width: 28,
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: icon != null ? Colors.white : Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
               child: icon,
             ),
             const Spacer(flex: 2),
-            Text(
-              text,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+            Center(
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+              ),
             ),
             const Spacer(flex: 3),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/Features/Home/presentation/widgets/add_memory_sheet.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
 
 class TimelineHeader extends StatelessWidget {
@@ -59,7 +60,27 @@ class TimelineHeader extends StatelessWidget {
               const SizedBox(width: 10),
               InkWell(
                 borderRadius: BorderRadius.circular(6),
-                onTap: () {},
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      return AddMemorySheet(
+                          // onCarAdded: (vehicule) {
+                          // ref.read(vehiculesProvider.notifier).state =
+                          //     [
+                          //   ...ref.read(vehiculesProvider),
+                          //   vehicule,
+                          // ];
+
+                          // Logger().i(ref.read(vehiculesProvider));
+
+                          // Navigator.pop(context);
+                          // },
+                          );
+                    },
+                  );
+                },
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   height: 46,

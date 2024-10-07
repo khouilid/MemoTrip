@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:file_picker/file_picker.dart';
+import 'package:logger/logger.dart';
 
 /// Returns the screen width
 double getDimension(double dimension, double limit) {
@@ -9,7 +12,6 @@ double getDimension(double dimension, double limit) {
   }
   return dimension;
 }
-
 
 /// Checks if the device is a desktop
 bool get isDesktop {
@@ -29,7 +31,6 @@ bool get isWindows {
   ].contains(defaultTargetPlatform);
 }
 
-
 /// Checks if the device is a MacOs
 bool get isMacOs {
   if (kIsWeb) return false;
@@ -37,7 +38,6 @@ bool get isMacOs {
     TargetPlatform.macOS,
   ].contains(defaultTargetPlatform);
 }
-
 
 /// Checks if the device is a Android
 bool get isAndroid {
@@ -47,7 +47,6 @@ bool get isAndroid {
   ].contains(defaultTargetPlatform);
 }
 
-
 /// Checks if the device is a iOS
 bool get isiOS {
   if (kIsWeb) return false;
@@ -56,7 +55,6 @@ bool get isiOS {
   ].contains(defaultTargetPlatform);
 }
 
-
 /// Password validation
 bool isPasswordValid(String input) {
   return RegExp(
@@ -64,14 +62,10 @@ bool isPasswordValid(String input) {
   ).hasMatch(input);
 }
 
-
 /// hide keyboard
 void hideKeyBoard() {
   WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
 }
-
-
-
 
 String formatTimer(int seconds) {
   final int hours = seconds ~/ 3600;
@@ -83,4 +77,28 @@ String formatTimer(int seconds) {
   final String formattedSeconds = finalSeconds.toString().padLeft(2, '0');
 
   return "${formattedHours != '00' ? '$formattedHours:' : ''}$formattedMinutes:$formattedSeconds";
+}
+
+Future<File?> pickFile({List<String>? allowedExtensions}) async {
+  try {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: allowedExtensions ??
+          [
+            'PNG',
+            'JPG',
+            'SVG',
+            'JPEG',
+          ],
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      final filePath = result.files.first.path;
+      return File(filePath ?? '');
+    }
+  } catch (e) {
+    Logger().i('Error picking PDF file: $e');
+  }
+
+  return null;
 }

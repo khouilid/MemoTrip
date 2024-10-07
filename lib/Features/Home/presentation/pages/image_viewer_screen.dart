@@ -59,7 +59,7 @@ class ImageViewerPage extends HookWidget {
                         style: TextStyle(
                             fontSize: 16,
                             color: AppColors.white,
-                            fontWeight: FontWeight.w800),
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                     // the three dots

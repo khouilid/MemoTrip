@@ -22,7 +22,6 @@ class _MapViewState extends ConsumerState<MapPage> {
   bool _isLoaded = false;
 
   /// markers List
-  final Map<String, Marker> _markers = {};
 
   /// the style of the map
   late String _mapStyleString;
@@ -38,9 +37,10 @@ class _MapViewState extends ConsumerState<MapPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _onBuildCompleted().listen((marker) {
-        setState(() {
-          _markers[marker.markerId.value] = marker;
-        });
+        print('Marker added: ${marker.markerId.value}');
+        Map<String, Marker> _markers = ref.watch(markersProvider);
+        _markers[marker.markerId.value] = marker;
+        ref.read(markersProvider.notifier).state = _markers;
       }, onError: (error) {
         print('Error while building map: $error');
         throw Exception('Error while building map');
@@ -60,45 +60,48 @@ class _MapViewState extends ConsumerState<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoaded
-        ? GoogleMap(
-            padding: EdgeInsets.only(
-              bottom: 30,
-            ),
-            myLocationEnabled: false,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(48.864716, 2.349014), // France
-              zoom: 8.0,
-            ),
-            compassEnabled: true,
-            onMapCreated: (GoogleMapController controller) {
-              _mapController.complete(controller);
-              _mapController.future.then((value) {
-                value.setMapStyle(_mapStyleString);
-              });
-            },
-            onCameraMoveStarted: () {},
-            onCameraIdle: () {},
-            onCameraMove: (CameraPosition position) {},
-            markers: _markers.values.toSet(),
-          )
-        : ListView(
-            children: [
-              for (int i = 0; i < data.length; i++)
-                Transform.translate(
-                  offset: Offset(
-                    -MediaQuery.of(context).size.width * 2,
-                    -MediaQuery.of(context).size.height * 2,
-                  ),
-                  child: RepaintBoundary(
-                    key: data[i]['globalKey'],
-                    child: data[i]['widget'],
-                  ),
-                )
-            ],
-          );
+    return Stack(
+      children: [
+        ListView(
+          children: [
+            for (int i = 0; i < data.length; i++)
+              Transform.translate(
+                offset: Offset(
+                  -MediaQuery.of(context).size.width * 2,
+                  -MediaQuery.of(context).size.height * 2,
+                ),
+                child: RepaintBoundary(
+                  key: data[i]['globalKey'],
+                  child: data[i]['widget'],
+                ),
+              )
+          ],
+        ),
+        GoogleMap(
+          padding: EdgeInsets.only(
+            bottom: 30,
+          ),
+          myLocationEnabled: false,
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(48.864716, 2.349014), // France
+            zoom: 9.6,
+          ),
+          compassEnabled: true,
+          onMapCreated: (GoogleMapController controller) {
+            _mapController.complete(controller);
+            _mapController.future.then((value) {
+              value.setMapStyle(_mapStyleString);
+            });
+          },
+          onCameraMoveStarted: () {},
+          onCameraIdle: () {},
+          onCameraMove: (CameraPosition position) {},
+          markers: ref.watch(markersProvider).values.toSet(),
+        ),
+      ],
+    );
   }
 
   Stream<Marker> _onBuildCompleted() async* {
@@ -122,9 +125,13 @@ class _MapViewState extends ConsumerState<MapPage> {
         ?.findRenderObject() as RenderRepaintBoundary;
 
     // Ensure the widget is painted
-    await Future.delayed(const Duration(milliseconds: 100));
+    if (boundary.debugNeedsPaint) {
+      await Future.delayed(const Duration(milliseconds: 200));
+      return _generateMarkersFromWidgets(datas); // Retry after delay
+    }
 
     ui.Image image = await boundary.toImage(pixelRatio: .85);
+
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     return Marker(
       markerId: MarkerId(datas['id']),

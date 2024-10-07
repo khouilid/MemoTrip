@@ -25,6 +25,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/favicon.png
   AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
 
+  /// File path: assets/images/map.png
+  AssetGenImage get map => const AssetGenImage('assets/images/map.png');
+
   /// File path: assets/images/onbaording_three.svg
   SvgGenImage get onbaordingThree =>
       const SvgGenImage('assets/images/onbaording_three.svg');
@@ -39,7 +42,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values =>
-      [favicon, onbaordingThree, onbaordingTwo, onboardingOne];
+      [favicon, map, onbaordingThree, onbaordingTwo, onboardingOne];
 }
 
 class $AssetsJsonsGen {

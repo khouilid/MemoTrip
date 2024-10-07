@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/Features/Home/domain/memory_model.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CustomMarker extends StatelessWidget {
   const CustomMarker({
@@ -20,12 +21,23 @@ class CustomMarker extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(3),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.chateauGreen,
                 borderRadius: BorderRadius.circular(999),
-                image: DecorationImage(
-                  image: NetworkImage(memoryModel.images.first),
-                  fit: BoxFit.cover,
+              ),
+              child: CachedNetworkImage(
+                imageUrl: memoryModel.images.first,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ),
