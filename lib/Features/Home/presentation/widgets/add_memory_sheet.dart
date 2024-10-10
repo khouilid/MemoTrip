@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:template/Features/Home/presentation/widgets/file_upload.dart';
 import 'package:template/Features/splash/widgets/social_botton.dart';
@@ -30,7 +31,7 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
     return Wrap(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: 620,
           padding: EdgeInsets.symmetric(
             vertical: Spacing.xxsmall,
           ),
@@ -68,11 +69,16 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(
-                              CupertinoIcons.map_pin_ellipse,
-                              color: AppColors.black,
+                            SvgPicture.asset(
+                              Assets.images.sendIcon.path,
+                              width: 20,
+                              height: 20,
+                              colorFilter: ColorFilter.mode(
+                                AppColors.chateauGreen,
+                                BlendMode.srcIn,
+                              ),
                             ),
-                            SizedBox(width: 4),
+                            SizedBox(width: 6),
                             Text(
                               'New Trip',
                               style: TextStyle(
@@ -82,7 +88,7 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 10),
                         SizedBox(
                           width: double.infinity,
                           child: Column(
@@ -246,7 +252,7 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Icon(
-                                          CupertinoIcons.paperplane,
+                                          CupertinoIcons.pin,
                                           color: AppColors.white,
                                           size: 16,
                                         ),

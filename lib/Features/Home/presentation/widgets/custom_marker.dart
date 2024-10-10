@@ -21,7 +21,7 @@ class CustomMarker extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(3),
               decoration: BoxDecoration(
-                color: AppColors.chateauGreen,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: CachedNetworkImage(
@@ -47,7 +47,7 @@ class CustomMarker extends StatelessWidget {
               scale: 6,
               child: const Icon(
                 Icons.arrow_drop_down,
-                color: AppColors.chateauGreen,
+                color: AppColors.white,
                 size: 5,
               ),
             ),

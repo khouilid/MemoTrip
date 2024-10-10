@@ -19,13 +19,13 @@ class TimelineHeader extends StatelessWidget {
           Text(
             "Timeline",
             style: TextStyle(
-              fontSize: 26,
+              fontSize: 30,
               color: AppColors.black,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
             ),
             textAlign: TextAlign.start,
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 14),
           Row(
             children: [
               Expanded(

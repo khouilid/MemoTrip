@@ -3,8 +3,8 @@ import 'dart:ui' show Color;
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const chateauGreen = Color(0xFF22A45D);
-  // 0xFFF5F6F9
+  static const chateauGreen = Color(0xFF2f2f2f);
+
   static const whiteSmoke2 = Color(0xFFF5F6F9);
   static const curiousBlue = Color(0xff25A5DC);
   static const pictonBlue = Color(0xFF42A4DF);
@@ -22,6 +22,7 @@ class AppColors {
   static const catskillWhite = Color(0xffE8F1F4);
   static const concrete = Color(0xffF2F2F2);
   static const grey = Color(0xFF9E9E9E);
+  static const grey2 = Color(0xFF9399A1);
   static const lightGrey = Color(0xFFDADADA);
   static const platinum = Color(0xffE3E3E3);
   static const denimBlue = Color(0xFF1488CC);

@@ -32,7 +32,13 @@ final memoryModelProvider = StateProvider<List<MemoryModel>>((ref) => [
         id: 1,
         images: [
           "https://andrewstuder.com/wp-content/uploads/2020/04/AF3I3830-scaled.jpg",
-          "https://andrewstuder.com/wp-content/uploads/2020/04/AF3I3830-scaled.jpg"
+          "https://andrewstuder.com/wp-content/uploads/2020/04/AF3I3830-scaled.jpg",
+          "https://t3.ftcdn.net/jpg/06/52/46/10/360_F_652461097_nhY9UrfRYtCQoEtZdPVwfWBYDygpYddn.jpg",
+          "https://andrewstuder.com/wp-content/uploads/2020/04/AF3I3830-scaled.jpg",
+          "https://t3.ftcdn.net/jpg/06/52/46/10/360_F_652461097_nhY9UrfRYtCQoEtZdPVwfWBYDygpYddn.jpg",
+          "https://andrewstuder.com/wp-content/uploads/2020/04/AF3I3830-scaled.jpg",
+          "https://t3.ftcdn.net/jpg/06/52/46/10/360_F_652461097_nhY9UrfRYtCQoEtZdPVwfWBYDygpYddn.jpg",
+          "https://andrewstuder.com/wp-content/uploads/2020/04/AF3I3830-scaled.jpg",
         ],
         title: "Wireless Controller for PS4™",
         description:

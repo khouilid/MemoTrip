@@ -22,8 +22,20 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Calendar.svg
+  SvgGenImage get calendar => const SvgGenImage('assets/images/Calendar.svg');
+
+  /// File path: assets/images/Location.svg
+  SvgGenImage get location => const SvgGenImage('assets/images/Location.svg');
+
   /// File path: assets/images/favicon.png
   AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
+
+  /// File path: assets/images/icon home.svg
+  SvgGenImage get iconHome => const SvgGenImage('assets/images/icon home.svg');
+
+  /// File path: assets/images/icon user.svg
+  SvgGenImage get iconUser => const SvgGenImage('assets/images/icon user.svg');
 
   /// File path: assets/images/map.png
   AssetGenImage get map => const AssetGenImage('assets/images/map.png');
@@ -40,9 +52,37 @@ class $AssetsImagesGen {
   SvgGenImage get onboardingOne =>
       const SvgGenImage('assets/images/onboarding_one.svg');
 
+  /// File path: assets/images/screen_one.png
+  AssetGenImage get screenOne =>
+      const AssetGenImage('assets/images/screen_one.png');
+
+  /// File path: assets/images/screen_three.png
+  AssetGenImage get screenThree =>
+      const AssetGenImage('assets/images/screen_three.png');
+
+  /// File path: assets/images/screen_two.png
+  AssetGenImage get screenTwo =>
+      const AssetGenImage('assets/images/screen_two.png');
+
+  /// File path: assets/images/send icon.svg
+  SvgGenImage get sendIcon => const SvgGenImage('assets/images/send icon.svg');
+
   /// List of all assets
-  List<dynamic> get values =>
-      [favicon, map, onbaordingThree, onbaordingTwo, onboardingOne];
+  List<dynamic> get values => [
+        calendar,
+        location,
+        favicon,
+        iconHome,
+        iconUser,
+        map,
+        onbaordingThree,
+        onbaordingTwo,
+        onboardingOne,
+        screenOne,
+        screenThree,
+        screenTwo,
+        sendIcon
+      ];
 }
 
 class $AssetsJsonsGen {

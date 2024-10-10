@@ -60,6 +60,8 @@ class _MapViewState extends State<HomePage>
       body: BottomBar(
         barColor: AppColors.whiteSmoke2,
         hideOnScroll: true,
+        iconWidth: 35,
+        iconHeight: 35,
         borderRadius: const BorderRadius.all(Radius.circular(125)),
         child: TabBar(
           dividerColor: Colors.transparent,
@@ -67,17 +69,18 @@ class _MapViewState extends State<HomePage>
           controller: tabController,
           splashFactory: NoSplash.splashFactory,
           indicatorColor: AppColors.chateauGreen,
+          padding: const EdgeInsets.all(0),
           tabs: [
             SizedBox(
               height: 55,
               width: 40,
               child: Center(
                 child: SvgPicture.asset(
-                  Assets.icons.languages.earth.path,
+                  Assets.images.iconHome.path,
                   colorFilter: ColorFilter.mode(
                       currentPage == 0
                           ? AppColors.chateauGreen
-                          : AppColors.grey,
+                          : AppColors.grey2,
                       BlendMode.srcIn),
                 ),
               ),
@@ -87,11 +90,11 @@ class _MapViewState extends State<HomePage>
               width: 40,
               child: Center(
                 child: SvgPicture.asset(
-                  Assets.icons.languages.timeline.path,
+                  Assets.images.calendar.path,
                   colorFilter: ColorFilter.mode(
                       currentPage == 1
                           ? AppColors.chateauGreen
-                          : AppColors.grey,
+                          : AppColors.grey2,
                       BlendMode.srcIn),
                 ),
               ),
@@ -101,11 +104,11 @@ class _MapViewState extends State<HomePage>
               width: 40,
               child: Center(
                 child: SvgPicture.asset(
-                  Assets.icons.languages.profile.path,
+                  Assets.images.iconUser.path,
                   colorFilter: ColorFilter.mode(
                       currentPage == 2
                           ? AppColors.chateauGreen
-                          : AppColors.grey,
+                          : AppColors.grey2,
                       BlendMode.srcIn),
                 ),
               ),

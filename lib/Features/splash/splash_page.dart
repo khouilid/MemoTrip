@@ -53,7 +53,7 @@ class _SplashPageState extends State<SplashPage> {
               padding: const EdgeInsets.symmetric(horizontal: 26),
               child:
                   // Google
-              SocalButton(
+                  SocalButton(
                 press: () {
                   context.router.replace(HomeRoute());
                 },
