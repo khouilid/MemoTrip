@@ -48,14 +48,13 @@ class _MapViewState extends State<HomePage>
     super.dispose();
   }
 
-  List<Widget> screens = [
-    MapPage(),
-    TimelineScreen(),
-    ProfileScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = [
+      MapPage(),
+      TimelineScreen(),
+      ProfileScreen(),
+    ];
     return Scaffold(
       body: BottomBar(
         barColor: AppColors.whiteSmoke2,

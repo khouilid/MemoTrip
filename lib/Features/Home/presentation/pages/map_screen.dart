@@ -31,19 +31,17 @@ class _MapViewState extends ConsumerState<MapPage> {
   @override
   void initState() {
     parseData();
-    rootBundle.loadString('assets/data/map_styles.json').then((string) {
-      _mapStyleString = string;
-    });
+    // rootBundle.loadString('assets/data/map_styles.json').then((string) {
+    //   _mapStyleString = string;
+    // });
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _onBuildCompleted().listen((marker) {
-        print('Marker added: ${marker.markerId.value}');
         Map<String, Marker> _markers = ref.watch(markersProvider);
         _markers[marker.markerId.value] = marker;
         ref.read(markersProvider.notifier).state = _markers;
       }, onError: (error) {
-        print('Error while building map: $error');
-        throw Exception('Error while building map');
+        throw Exception(error);
       });
     });
 
@@ -107,8 +105,8 @@ class _MapViewState extends ConsumerState<MapPage> {
   Stream<Marker> _onBuildCompleted() async* {
     for (var value in data) {
       try {
-        Marker marker = await _generateMarkersFromWidgets(value);
-        yield marker;
+        Marker? marker = await _generateMarkersFromWidgets(value);
+        if (marker != null) yield marker;
         setState(() {});
       } catch (error, stackTrace) {
         throw Exception('$error $stackTrace');
@@ -119,30 +117,29 @@ class _MapViewState extends ConsumerState<MapPage> {
     });
   }
 
-  Future<Marker> _generateMarkersFromWidgets(Map<String, dynamic> datas) async {
-    RenderRepaintBoundary boundary = datas['globalKey']
-        .currentContext
-        ?.findRenderObject() as RenderRepaintBoundary;
-
-    // Ensure the widget is painted
-    if (boundary.debugNeedsPaint) {
+  Future<Marker?> _generateMarkersFromWidgets(
+      Map<String, dynamic> datas) async {
+    if (datas['globalKey'].currentContext != null) {
+      RenderRepaintBoundary boundary = datas['globalKey']
+          .currentContext
+          ?.findRenderObject() as RenderRepaintBoundary;
       await Future.delayed(const Duration(milliseconds: 200));
-      return _generateMarkersFromWidgets(datas); // Retry after delay
+      ui.Image image = await boundary.toImage(pixelRatio: .85);
+
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      return Marker(
+        markerId: MarkerId(datas['id']),
+        position: datas['position'],
+        icon: BitmapDescriptor.bytes(byteData!.buffer.asUint8List()),
+        onTap: () {
+          context.router.push(
+            ImageViewerRoute(memoryModel: datas['model']),
+          );
+        },
+      );
     }
-
-    ui.Image image = await boundary.toImage(pixelRatio: .85);
-
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    return Marker(
-      markerId: MarkerId(datas['id']),
-      position: datas['position'],
-      icon: BitmapDescriptor.bytes(byteData!.buffer.asUint8List()),
-      onTap: () {
-        context.router.push(
-          ImageViewerRoute(memoryModel: datas['model']),
-        );
-      },
-    );
+    return null;
   }
 
   void parseData() {
