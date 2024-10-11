@@ -28,6 +28,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/Location.svg
   SvgGenImage get location => const SvgGenImage('assets/images/Location.svg');
 
+  /// File path: assets/images/Onboard-1.jpg
+  AssetGenImage get onboard1 =>
+      const AssetGenImage('assets/images/Onboard-1.jpg');
+
   /// File path: assets/images/favicon.png
   AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
 
@@ -48,21 +52,12 @@ class $AssetsImagesGen {
   SvgGenImage get onbaordingTwo =>
       const SvgGenImage('assets/images/onbaording_two.svg');
 
+  /// File path: assets/images/onboarding.mp4
+  String get onboarding => 'assets/images/onboarding.mp4';
+
   /// File path: assets/images/onboarding_one.svg
   SvgGenImage get onboardingOne =>
       const SvgGenImage('assets/images/onboarding_one.svg');
-
-  /// File path: assets/images/screen_one.png
-  AssetGenImage get screenOne =>
-      const AssetGenImage('assets/images/screen_one.png');
-
-  /// File path: assets/images/screen_three.png
-  AssetGenImage get screenThree =>
-      const AssetGenImage('assets/images/screen_three.png');
-
-  /// File path: assets/images/screen_two.png
-  AssetGenImage get screenTwo =>
-      const AssetGenImage('assets/images/screen_two.png');
 
   /// File path: assets/images/send icon.svg
   SvgGenImage get sendIcon => const SvgGenImage('assets/images/send icon.svg');
@@ -71,16 +66,15 @@ class $AssetsImagesGen {
   List<dynamic> get values => [
         calendar,
         location,
+        onboard1,
         favicon,
         iconHome,
         iconUser,
         map,
         onbaordingThree,
         onbaordingTwo,
+        onboarding,
         onboardingOne,
-        screenOne,
-        screenThree,
-        screenTwo,
         sendIcon
       ];
 }

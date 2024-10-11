@@ -19,6 +19,7 @@ class SocalButton extends StatelessWidget {
     const padding = EdgeInsets.symmetric(horizontal: 16, vertical: 10);
     return SizedBox(
       width: double.infinity,
+      height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 0,
@@ -35,7 +36,7 @@ class SocalButton extends StatelessWidget {
               height: 28,
               width: 28,
               decoration: BoxDecoration(
-                color: icon != null ? Colors.white : Colors.transparent,
+                // color: icon != null ? Colors.white : Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
               child: icon,
