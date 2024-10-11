@@ -14,7 +14,7 @@ import 'package:template/Features/user/shared/user_providers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:template/core/config/environment.dart';
 import 'package:template/core/infrastructure/helpers/logger_interceptor.dart';
-import '../../language_change/shared/providers.dart';
+
 import '../../theme/shared/light_theme.dart';
 import '../../theme/shared/providers.dart';
 import '../shared/providers.dart';
@@ -36,8 +36,7 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
       await ref.read(themeNotifierProvider.notifier).getThemeMode();
 
       /// Initialize the Localization when the app starts. We do this here to
-      await ref.read(localizationNotifierProvider.notifier).getLocale();
-
+      // await ref.read(localizationNotifierProvider.notifier).getLocale();
 
       // Initialize the app push notifications when the app starts. We do this here to
       final notificationRepositoryN = ref.read(notificationRepositoryProvider);
@@ -65,7 +64,7 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
   @override
   Widget build(BuildContext context) {
     /// this is the localization provider that we created in the [language_change_provider.dart] file.
-    final localizationProvider = ref.watch(localizationNotifierProvider);
+    // final localizationProvider = ref.watch(localizationNotifierProvider);
 
     /// this is the theme provider that we created in the [theme_provider.dart] file.
     final themeProvider = ref.watch(themeNotifierProvider);
@@ -131,7 +130,7 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
           routerDelegate: appRouter.delegate(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          locale: localizationProvider,
+          locale: Locale('en'),
         ));
   }
 }

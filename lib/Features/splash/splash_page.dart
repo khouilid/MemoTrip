@@ -31,6 +31,12 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.white,
@@ -74,7 +80,7 @@ class _SplashPageState extends State<SplashPage> {
             // ),
           ),
           Positioned(
-            bottom: 200,
+            bottom: 280,
             left: 20,
             right: 20,
             child: Text(
@@ -88,7 +94,7 @@ class _SplashPageState extends State<SplashPage> {
             ),
           ),
           Positioned(
-            bottom: 140,
+            bottom: 220,
             left: 20,
             right: 20,
             child: Text(
@@ -102,7 +108,23 @@ class _SplashPageState extends State<SplashPage> {
             ),
           ),
           Positioned(
-            bottom: 40,
+            bottom: 70,
+            left: 20,
+            right: 20,
+            child: SocalButton(
+              press: () {
+                context.router.replace(HomeRoute());
+              },
+              text: "Connect with Apple",
+              color: AppColors.chateauGreen,
+              icon: Image.asset(
+                Assets.icons.languages.apple.path,
+                width: 24,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 140,
             left: 20,
             right: 20,
             child: SocalButton(
@@ -117,6 +139,18 @@ class _SplashPageState extends State<SplashPage> {
               ),
             ),
           ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: const Text(
+              "By continuing your confirm that you agree \nwith our Term and Condition",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.grey,
+              ),
+            ),
+          )
           // ),
           // const Spacer(),
         ],

@@ -92,25 +92,13 @@ class $AssetsJsonsGen {
 class $AssetsIconsLanguagesGen {
   const $AssetsIconsLanguagesGen();
 
+  /// File path: assets/icons/languages/apple.png
+  AssetGenImage get apple =>
+      const AssetGenImage('assets/icons/languages/apple.png');
+
   /// File path: assets/icons/languages/calendar.svg
   SvgGenImage get calendar =>
       const SvgGenImage('assets/icons/languages/calendar.svg');
-
-  /// File path: assets/icons/languages/earth.svg
-  SvgGenImage get earth =>
-      const SvgGenImage('assets/icons/languages/earth.svg');
-
-  /// File path: assets/icons/languages/english.svg
-  SvgGenImage get english =>
-      const SvgGenImage('assets/icons/languages/english.svg');
-
-  /// File path: assets/icons/languages/france.svg
-  SvgGenImage get france =>
-      const SvgGenImage('assets/icons/languages/france.svg');
-
-  /// File path: assets/icons/languages/germany.svg
-  SvgGenImage get germany =>
-      const SvgGenImage('assets/icons/languages/germany.svg');
 
   /// File path: assets/icons/languages/google.svg
   SvgGenImage get google =>
@@ -118,10 +106,6 @@ class $AssetsIconsLanguagesGen {
 
   /// File path: assets/icons/languages/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/languages/home.svg');
-
-  /// File path: assets/icons/languages/nederlands.svg
-  SvgGenImage get nederlands =>
-      const SvgGenImage('assets/icons/languages/nederlands.svg');
 
   /// File path: assets/icons/languages/profile.svg
   SvgGenImage get profile =>
@@ -131,29 +115,13 @@ class $AssetsIconsLanguagesGen {
   SvgGenImage get search =>
       const SvgGenImage('assets/icons/languages/search.svg');
 
-  /// File path: assets/icons/languages/spain.svg
-  SvgGenImage get spain =>
-      const SvgGenImage('assets/icons/languages/spain.svg');
-
   /// File path: assets/icons/languages/timeline.svg
   SvgGenImage get timeline =>
       const SvgGenImage('assets/icons/languages/timeline.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [
-        calendar,
-        earth,
-        english,
-        france,
-        germany,
-        google,
-        home,
-        nederlands,
-        profile,
-        search,
-        spain,
-        timeline
-      ];
+  List<dynamic> get values =>
+      [apple, calendar, google, home, profile, search, timeline];
 }
 
 class Assets {
