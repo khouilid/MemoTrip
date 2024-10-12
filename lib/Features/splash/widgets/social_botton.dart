@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:template/core/presentation/managers/color_manager.dart';
 
 class SocalButton extends StatelessWidget {
   final Color color;
+  final Color textcolor;
   final String text;
   final Widget? icon;
   final GestureTapCallback press;
@@ -12,6 +14,7 @@ class SocalButton extends StatelessWidget {
     required this.icon,
     required this.press,
     required this.text,
+    required this.textcolor,
   });
 
   @override
@@ -46,10 +49,9 @@ class SocalButton extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: textcolor,
+                    fontWeight: FontWeight.w600),
               ),
             ),
             const Spacer(flex: 3),

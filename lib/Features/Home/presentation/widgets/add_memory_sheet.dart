@@ -273,6 +273,7 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                               SizedBox(height: Spacing.base),
 
                               SocalButton(
+                                  textcolor: AppColors.white,
                                   press: () {},
                                   text: "Create Trip",
                                   color: AppColors.chateauGreen,

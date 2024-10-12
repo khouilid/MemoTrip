@@ -1,21 +1,25 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:template/Features/splash/widgets/social_botton.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
+import 'package:template/core/shared/providers.dart';
 import 'package:template/gen/assets.gen.dart';
 import 'package:video_player/video_player.dart';
 import '/core/presentation/routes/app_router.gr.dart';
 
 @RoutePage()
-class SplashPage extends StatefulWidget {
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends ConsumerState<SplashPage> {
   int currentPage = 0;
   late VideoPlayerController _controller;
 
@@ -28,6 +32,16 @@ class _SplashPageState extends State<SplashPage> {
         _controller.play();
         _controller.setLooping(true);
       });
+
+    ref
+        .read(remoteServerConnexionProvider)
+        .instance()
+        .auth
+        .onAuthStateChange
+        .listen((event) {
+      // context.router.replace(const HomeRoute());
+      print(event);
+    });
   }
 
   @override
@@ -43,41 +57,10 @@ class _SplashPageState extends State<SplashPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // const Spacer(flex: 2),
-          // Expanded(
-          //   flex: 14,
-          //   child: PageView.builder(
-          //     itemCount: onBoardingFlow.length,
-          //     onPageChanged: (value) {
-          //       setState(() {
-          //         currentPage = value;
-          //       });
-          //     },
-          //     itemBuilder: (context, index) => OnboardContent(
-          //       illustration: onBoardingFlow[index]["illustration"],
-          //       title: onBoardingFlow[index]["title"],
-          //       text: onBoardingFlow[index]["text"],
-          //     ),
-          //   ),
-          // ),
-          // const Spacer(),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: List.generate(
-          //     onBoardingFlow.length,
-          //     (index) => DotIndicator(isActive: index == currentPage),
-          //   ),
-          // ),
-          // const Spacer(flex: 2),
           SizedBox(
             width: double.infinity,
             height: MediaQuery.of(context).size.height,
             child: VideoPlayer(_controller),
-            //  Image.asset(
-            //   Assets.images.onboard1.path,
-            //   fit: BoxFit.cover,
-            //   // width: 200,
-            // ),
           ),
           Positioned(
             bottom: 280,
@@ -108,22 +91,6 @@ class _SplashPageState extends State<SplashPage> {
             ),
           ),
           Positioned(
-            bottom: 70,
-            left: 20,
-            right: 20,
-            child: SocalButton(
-              press: () {
-                context.router.replace(HomeRoute());
-              },
-              text: "Connect with Apple",
-              color: AppColors.chateauGreen,
-              icon: Image.asset(
-                Assets.icons.languages.apple.path,
-                width: 24,
-              ),
-            ),
-          ),
-          Positioned(
             bottom: 140,
             left: 20,
             right: 20,
@@ -131,8 +98,26 @@ class _SplashPageState extends State<SplashPage> {
               press: () {
                 context.router.replace(HomeRoute());
               },
+              text: "Connect with Apple",
+              color: AppColors.white,
+              textcolor: AppColors.chateauGreen,
+              icon: Image.asset(
+                Assets.icons.languages.apple.path,
+                width: 24,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 70,
+            left: 20,
+            right: 20,
+            child: SocalButton(
+              press: () {
+                _nativeGoogleSignIn();
+              },
               text: "Connect with Google",
               color: AppColors.chateauGreen,
+              textcolor: AppColors.white,
               icon: SvgPicture.asset(
                 Assets.icons.languages.google.path,
                 width: 24,
@@ -157,93 +142,40 @@ class _SplashPageState extends State<SplashPage> {
       ),
     );
   }
-}
 
-class OnboardContent extends StatelessWidget {
-  const OnboardContent({
-    super.key,
-    required this.illustration,
-    required this.title,
-    required this.text,
-  });
+  Future<void> _nativeGoogleSignIn() async {
+    /// Web Client ID that you registered with Google Cloud.
+    const webClientId =
+        '702181279182-2ahbq0uh2big8g9vtcoa2vgi01lf81f2.apps.googleusercontent.com';
 
-  final String? illustration, title, text;
+    /// iOS Client ID that you registered with Google Cloud.
+    const iosClientId =
+        '702181279182-scdd5b2t8m9hapaktl707tjk7qsfvra2.apps.googleusercontent.com';
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: AspectRatio(
-            aspectRatio: .8,
-            child: SvgPicture.asset(
-              illustration!,
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        // const SizedBox(height: 16),
-        // Text(
-        //   title!,
-        //   style: Theme.of(context)
-        //       .textTheme
-        //       .titleLarge!
-        //       .copyWith(fontWeight: FontWeight.bold),
-        // ),
-        // const SizedBox(height: 8),
-        // Text(
-        //   text!,
-        //   style: Theme.of(context).textTheme.bodyMedium,
-        //   textAlign: TextAlign.center,
-        // ),
-      ],
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: iosClientId,
+      serverClientId: webClientId,
     );
+    final googleUser = await googleSignIn.signIn();
+    final googleAuth = await googleUser!.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
+
+    if (accessToken == null) {
+      throw 'No Access Token found.';
+    }
+    if (idToken == null) {
+      throw 'No ID Token found.';
+    }
+
+    await ref
+        .read(remoteServerConnexionProvider)
+        .instance()
+        .auth
+        .signInWithIdToken(
+          provider: OAuthProvider.google,
+          idToken: idToken,
+          accessToken: accessToken,
+        );
   }
 }
-
-class DotIndicator extends StatelessWidget {
-  const DotIndicator({
-    super.key,
-    this.isActive = false,
-    this.activeColor = AppColors.chateauGreen,
-    this.inActiveColor = const Color(0xFF868686),
-  });
-
-  final bool isActive;
-  final Color activeColor, inActiveColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      margin: const EdgeInsets.symmetric(horizontal: 16 / 2),
-      height: 5,
-      width: 8,
-      decoration: BoxDecoration(
-        color: isActive ? activeColor : inActiveColor.withOpacity(0.25),
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-      ),
-    );
-  }
-}
-
-// Demo data for our Onboarding screen
-List<Map<String, dynamic>> onBoardingFlow = [
-  {
-    "illustration": Assets.images.onboardingOne.path,
-    "title": "Capture Every Moment",
-    "text": "Track your travels and document\nmemories with photos, and notes."
-  },
-  {
-    "illustration": Assets.images.onbaordingTwo.path,
-    "title": "Share Your Journey",
-    "text":
-        "Collaborate with others to create a shared\njournal that tells the full story of your adventures."
-  },
-  {
-    "illustration": Assets.images.onbaordingThree.path,
-    "title": "Relive and Preserve",
-    "text":
-        "Easily organize your memories and turn them\ninto a physical album to keep forever."
-  }
-];

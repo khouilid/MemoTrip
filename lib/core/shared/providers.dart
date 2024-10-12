@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:template/core/infrastructure/helpers/remote_server_connexion.dart';
 
 import '../infrastructure/helpers/internet_connection.dart';
 import '../presentation/routes/app_router.dart';
@@ -14,6 +15,11 @@ final flutterSecureStorageProvider = Provider<FlutterSecureStorage>(
 /// this is the dio provider that we created in the [dio_provider.dart] file.
 final dioProvider = Provider<Dio>(
   (ref) => Dio(),
+);
+
+// RemoteServerConnexion
+final remoteServerConnexionProvider = Provider<RemoteServerConnexion>(
+  (ref) => RemoteServerConnexion(),
 );
 
 /// this is the splash state provider that we created in the [splash_provider.dart] file.
