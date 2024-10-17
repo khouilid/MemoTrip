@@ -1,123 +1,85 @@
+import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:template/Features/auth/infrastructure/tokens_storage/secure_tokens_storage.dart';
 import 'package:template/core/domain/failure.dart';
 import 'package:template/core/infrastructure/helpers/repository_helper.dart';
-
-
-import '../../user/domain/user_domain.dart';
 import '../../user/infrastructure/user_storage/user_storage.dart';
-
-import '../domain/auth_response.dart';
-import '../domain/tokens.dart';
 import 'auth_remote_service.dart';
-import 'tokens_storage/tokens_storage.dart';
 
 class Authenticator with RepositoryHelper {
   final AuthRemoteService _remoteService;
   final UserStorage _userStorage;
-  final TokensStorage _tokensStorage;
-
+  final SecureTokensStorage _tokensStorage;
   const Authenticator(
     this._remoteService,
     this._userStorage,
     this._tokensStorage,
   );
 
-  Future<User?> getSignedInUser() async {
+  // Future<Tokens?> getTokens() async {
+  //   try {
+  //     final String = await _tokensStorage.read();
+  //     print(String);
+  //     if (String != null) {
+  //       return String.toDomain();
+  //     }
+  //     return null;
+  //   } on PlatformException {
+  //     return null;
+  //   }
+  // }
+
+  FutureEitherFailureOr<AuthResponse> nativeGoogleSignIn() => handleData(
+        _remoteService.nativeGoogleSignIn(),
+        (_) async {
+          if (_.user != null) {
+            _userStorage.save(_.user!);
+            await _tokensStorage.save(_.session!.accessToken);
+            return _;
+          }
+          return _;
+        },
+      );
+
+  Future<AuthResponse?> getSignedInUser() async {
     try {
       final tokensFromStorage = await getTokens();
       if (tokensFromStorage == null) {
         await _userStorage.clear();
         return null;
       }
-      final expiresAt = DateTime.parse(tokensFromStorage.access.expiresAt);
 
-      final expired = DateTime.now().isAfter(expiresAt);
-
-      if (expired) {
-        await signOut();
-        return null;
-      }
-
-      final before2Days = expiresAt.isBefore(
-        DateTime.now().subtract(
-          const Duration(days: 2),
-        ),
-      );
-
-      if (before2Days) {
-        final failureOrSuccess =
-            await refreshToken(tokensFromStorage.refresh.token);
-        return failureOrSuccess.fold(
-          (l) => l.maybeMap(
-            server: (_) async {
-              if (_.code == 4000) {
-                final user = await _userStorage.read();
-
-                return user?.toDomain();
-              }
-              return null;
-            },
-            orElse: () => null,
-          ),
-          (r) async {
-            final user = await _userStorage.read();
-            return user?.toDomain();
-          },
-        );
-      } else {
-        final user = await _userStorage.read();
-        return user?.toDomain();
-      }
+      final user = await _userStorage.read();
+      final token = await _tokensStorage.read() ?? "";
+      Logger().i(user);
+      return AuthResponse(
+          session: Session(accessToken: token, tokenType: '', user: user!),
+          user: user);
     } on PlatformException {
       return null;
     }
   }
 
-  Future<Tokens?> getTokens() async {
+  Future<String?> getTokens() async {
     try {
-      final tokensDto = await _tokensStorage.read();
-      print(tokensDto);
-      if (tokensDto != null) {
-        return tokensDto.toDomain();
+      final tokens = await _tokensStorage.read();
+      if (tokens != null) {
+        return tokens;
       }
       return null;
     } on PlatformException {
       return null;
     }
   }
-
-  FutureEitherFailureOr<AuthResponse> signIn(
-    String email,
-    String password,
-  ) =>
-      handleData(
-        _remoteService.signIn(email, password),
-        (_) async {
-          print(_.tokens);
-          await _tokensStorage.save(_.tokens);
-          await _userStorage.save(_.user);
-          return _.toDomain();
-        },
-      );
-
-  FutureEitherFailureOr<Unit> refreshToken(
-    String token,
-  ) =>
-      handleData(
-        _remoteService.refreshToken(token),
-        (tokensDto) async {
-          await _tokensStorage.save(tokensDto);
-          return unit;
-        },
-      );
 
   FutureEitherFailureOr<Unit> signOut() async {
     try {
       await _userStorage.clear();
-      await _tokensStorage.clear();
 
       if (kIsWeb) {
         return right(unit);
@@ -131,7 +93,6 @@ class Authenticator with RepositoryHelper {
     } on PlatformException {
       return left(const Failure.storage());
     } catch (e) {
-   
       rethrow;
     }
   }

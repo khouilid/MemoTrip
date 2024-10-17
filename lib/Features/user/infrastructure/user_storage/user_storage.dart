@@ -1,10 +1,11 @@
 
 
 
-import '../dtos/user_dto.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 abstract class UserStorage {
-  Future<UserDto?> read();
-  Future<void> save(UserDto user);
+  Future<User?> read();
+  Future<void> save(User user);
   Future<void> clear();
 }

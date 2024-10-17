@@ -1,41 +1,15 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:template/core/domain/failure.dart';
 
-import '../infrastructure/authenticator.dart';
-import 'auth_notifier.dart';
+part 'auth_states.freezed.dart';
 
-class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier(this._authenticator) : super(const AuthState.initial());
-
-  final Authenticator _authenticator;
-
-  Future<void> checkAndUpdateAuthStatus() =>
-      _authenticator.getSignedInUser().then(
-        (user) {
-          if (user != null) {
-            state = AuthState.authenticated(user);
-          } else {
-            state = const AuthState.unauthenticated();
-          }
-        },
-      );
-
-  Future<void> signIn(String email, String password) async {
-    state = const AuthState.loading();
-
-    final failureOrSuccess = await _authenticator.signIn(email, password);
-
-    state = failureOrSuccess.fold(
-      (l) => AuthState.failure(l),
-      (r) => AuthState.authenticated(r.user),
-    );
-  }
-
-  Future<void> signOut() async {
-    final failureOrSuccess = await _authenticator.signOut();
-
-    state = failureOrSuccess.fold(
-      (l) => AuthState.failure(l),
-      (r) => const AuthState.unauthenticated(),
-    );
-  }
+@freezed
+class AuthStates with _$AuthStates {
+  const AuthStates._();
+  const factory AuthStates.initial() = _Initial;
+  const factory AuthStates.authenticated(User user) = _Authenticated;
+  const factory AuthStates.unauthenticated() = _Unauthenticated;
+  const factory AuthStates.loading() = _Loading;
+  const factory AuthStates.failure(Failure failure) = _Failure;
 }

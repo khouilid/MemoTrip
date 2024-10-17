@@ -8,31 +8,26 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/cupertino.dart' as _i11;
-import 'package:flutter/material.dart' as _i9;
-import 'package:template/app_update/domain/app_update_status_model.dart'
-    as _i10;
+import 'package:auto_route/auto_route.dart' as _i5;
+import 'package:flutter/cupertino.dart' as _i8;
+import 'package:flutter/material.dart' as _i6;
+import 'package:template/app_update/domain/app_update_status_model.dart' as _i7;
 import 'package:template/app_update/presentation/widget/app_update_dialog.dart'
     as _i1;
-import 'package:template/Features/auth/presentation/sign_in_page.dart' as _i5;
-import 'package:template/Features/Home/domain/memory_model.dart' as _i12;
+import 'package:template/Features/auth/presentation/splash_page.dart' as _i4;
+import 'package:template/Features/Home/domain/memory_model.dart' as _i9;
 import 'package:template/Features/Home/presentation/home_page.dart' as _i2;
 import 'package:template/Features/Home/presentation/pages/image_viewer_screen.dart'
     as _i3;
-import 'package:template/Features/notifications/presentation/notifications_page.dart'
-    as _i4;
-import 'package:template/Features/splash/splash_page.dart' as _i6;
-import 'package:template/Features/user/presentation/user_page.dart' as _i7;
 
-abstract class $AppRouter extends _i8.RootStackRouter {
+abstract class $AppRouter extends _i5.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i5.PageFactory> pagesMap = {
     AppUpdateRequiredRoute.name: (routeData) {
       final args = routeData.argsAs<AppUpdateRequiredRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i5.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.AppUpdateRequiredPage(
           key: args.key,
@@ -41,14 +36,14 @@ abstract class $AppRouter extends _i8.RootStackRouter {
       );
     },
     HomeRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i5.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.HomePage(),
       );
     },
     ImageViewerRoute.name: (routeData) {
       final args = routeData.argsAs<ImageViewerRouteArgs>();
-      return _i8.AutoRoutePage<dynamic>(
+      return _i5.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.ImageViewerPage(
           key: args.key,
@@ -56,28 +51,10 @@ abstract class $AppRouter extends _i8.RootStackRouter {
         ),
       );
     },
-    NotificationsRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.NotificationsPage(),
-      );
-    },
-    SignInRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.SignInPage(),
-      );
-    },
     SplashRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
+      return _i5.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.SplashPage(),
-      );
-    },
-    UserRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.UserPage(),
+        child: const _i4.SplashPage(),
       );
     },
   };
@@ -86,11 +63,11 @@ abstract class $AppRouter extends _i8.RootStackRouter {
 /// generated route for
 /// [_i1.AppUpdateRequiredPage]
 class AppUpdateRequiredRoute
-    extends _i8.PageRouteInfo<AppUpdateRequiredRouteArgs> {
+    extends _i5.PageRouteInfo<AppUpdateRequiredRouteArgs> {
   AppUpdateRequiredRoute({
-    _i9.Key? key,
-    required _i10.AppUpdateStatusModel appUpdateStatusModel,
-    List<_i8.PageRouteInfo>? children,
+    _i6.Key? key,
+    required _i7.AppUpdateStatusModel appUpdateStatusModel,
+    List<_i5.PageRouteInfo>? children,
   }) : super(
           AppUpdateRequiredRoute.name,
           args: AppUpdateRequiredRouteArgs(
@@ -102,8 +79,8 @@ class AppUpdateRequiredRoute
 
   static const String name = 'AppUpdateRequiredRoute';
 
-  static const _i8.PageInfo<AppUpdateRequiredRouteArgs> page =
-      _i8.PageInfo<AppUpdateRequiredRouteArgs>(name);
+  static const _i5.PageInfo<AppUpdateRequiredRouteArgs> page =
+      _i5.PageInfo<AppUpdateRequiredRouteArgs>(name);
 }
 
 class AppUpdateRequiredRouteArgs {
@@ -112,9 +89,9 @@ class AppUpdateRequiredRouteArgs {
     required this.appUpdateStatusModel,
   });
 
-  final _i9.Key? key;
+  final _i6.Key? key;
 
-  final _i10.AppUpdateStatusModel appUpdateStatusModel;
+  final _i7.AppUpdateStatusModel appUpdateStatusModel;
 
   @override
   String toString() {
@@ -124,8 +101,8 @@ class AppUpdateRequiredRouteArgs {
 
 /// generated route for
 /// [_i2.HomePage]
-class HomeRoute extends _i8.PageRouteInfo<void> {
-  const HomeRoute({List<_i8.PageRouteInfo>? children})
+class HomeRoute extends _i5.PageRouteInfo<void> {
+  const HomeRoute({List<_i5.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -133,16 +110,16 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i3.ImageViewerPage]
-class ImageViewerRoute extends _i8.PageRouteInfo<ImageViewerRouteArgs> {
+class ImageViewerRoute extends _i5.PageRouteInfo<ImageViewerRouteArgs> {
   ImageViewerRoute({
-    _i11.Key? key,
-    required _i12.MemoryModel memoryModel,
-    List<_i8.PageRouteInfo>? children,
+    _i8.Key? key,
+    required _i9.MemoryModel memoryModel,
+    List<_i5.PageRouteInfo>? children,
   }) : super(
           ImageViewerRoute.name,
           args: ImageViewerRouteArgs(
@@ -154,8 +131,8 @@ class ImageViewerRoute extends _i8.PageRouteInfo<ImageViewerRouteArgs> {
 
   static const String name = 'ImageViewerRoute';
 
-  static const _i8.PageInfo<ImageViewerRouteArgs> page =
-      _i8.PageInfo<ImageViewerRouteArgs>(name);
+  static const _i5.PageInfo<ImageViewerRouteArgs> page =
+      _i5.PageInfo<ImageViewerRouteArgs>(name);
 }
 
 class ImageViewerRouteArgs {
@@ -164,9 +141,9 @@ class ImageViewerRouteArgs {
     required this.memoryModel,
   });
 
-  final _i11.Key? key;
+  final _i8.Key? key;
 
-  final _i12.MemoryModel memoryModel;
+  final _i9.MemoryModel memoryModel;
 
   @override
   String toString() {
@@ -175,37 +152,9 @@ class ImageViewerRouteArgs {
 }
 
 /// generated route for
-/// [_i4.NotificationsPage]
-class NotificationsRoute extends _i8.PageRouteInfo<void> {
-  const NotificationsRoute({List<_i8.PageRouteInfo>? children})
-      : super(
-          NotificationsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NotificationsRoute';
-
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i5.SignInPage]
-class SignInRoute extends _i8.PageRouteInfo<void> {
-  const SignInRoute({List<_i8.PageRouteInfo>? children})
-      : super(
-          SignInRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SignInRoute';
-
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i6.SplashPage]
-class SplashRoute extends _i8.PageRouteInfo<void> {
-  const SplashRoute({List<_i8.PageRouteInfo>? children})
+/// [_i4.SplashPage]
+class SplashRoute extends _i5.PageRouteInfo<void> {
+  const SplashRoute({List<_i5.PageRouteInfo>? children})
       : super(
           SplashRoute.name,
           initialChildren: children,
@@ -213,19 +162,5 @@ class SplashRoute extends _i8.PageRouteInfo<void> {
 
   static const String name = 'SplashRoute';
 
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.UserPage]
-class UserRoute extends _i8.PageRouteInfo<void> {
-  const UserRoute({List<_i8.PageRouteInfo>? children})
-      : super(
-          UserRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'UserRoute';
-
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
 }

@@ -5,7 +5,7 @@ import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:template/Features/notifications/shared/notifications_providers.dart';
+import 'package:template/Features/auth/application/auth_states.dart';
 import 'package:template/app_update/presentation/widget/app_update_dialog.dart';
 import 'package:template/app_update/shared/providers.dart';
 import 'package:template/Features/auth/application/auth_notifier.dart';
@@ -39,8 +39,8 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
       // await ref.read(localizationNotifierProvider.notifier).getLocale();
 
       // Initialize the app push notifications when the app starts. We do this here to
-      final notificationRepositoryN = ref.read(notificationRepositoryProvider);
-      notificationRepositoryN.getToken();
+      // final notificationRepositoryN = ref.read(notificationRepositoryProvider);
+      // notificationRepositoryN.getToken();
 
       ref.read(dioProvider)
         ..options = BaseOptions(
@@ -78,9 +78,9 @@ class _AppWidgetState extends ConsumerState<AppWidget> {
       (_, __) {},
     );
 
-    ref.listen<AuthState>(
+    ref.listen<AuthStates>(
       authNotifierProvider,
-      (AuthState? previous, AuthState next) {
+      (AuthStates? previous, AuthStates next) {
         next.maybeMap(
           orElse: () {},
           authenticated: (_) {

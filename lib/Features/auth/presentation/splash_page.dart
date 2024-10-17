@@ -1,10 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:template/Features/auth/application/auth_states.dart';
+
+import 'package:template/Features/auth/shared/providers.dart';
 import 'package:template/Features/splash/widgets/social_botton.dart';
+import 'package:template/Features/user/shared/user_providers.dart';
 import 'package:template/core/presentation/managers/color_manager.dart';
 import 'package:template/core/shared/providers.dart';
 import 'package:template/gen/assets.gen.dart';
@@ -26,22 +30,31 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () async {
+        // await ref
+        // .read(authNotifierProvider.notifier)
+        // .checkAndUpdateAuthStatus();
+      });
+    });
+
     _controller = VideoPlayerController.asset(Assets.images.onboarding)
       ..initialize().then((_) {
-        setState(() {});
         _controller.play();
         _controller.setLooping(true);
+        setState(() {});
       });
 
-    ref
-        .read(remoteServerConnexionProvider)
-        .instance()
-        .auth
-        .onAuthStateChange
-        .listen((event) {
-      // context.router.replace(const HomeRoute());
-      print(event);
-    });
+    // ref
+    //     .read(remoteServerConnexionProvider)
+    //     .instance()
+    //     .auth
+    //     .onAuthStatesChange
+    //     .listen((event) {
+    //   // context.router.replace(const HomeRoute());
+    //   print('---> $event');
+    // });
   }
 
   @override
@@ -52,8 +65,25 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthStates>(authNotifierProvider, (previous, next) {
+      next.maybeMap(
+        orElse: () {},
+        authenticated: (state) {
+          ref.watch(userProvider.notifier).state = state.user;
+          Logger().i('User authenticated');
+          context.router.replace(HomeRoute());
+        },
+        failure: (state) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.failure.message ?? 'An error occured'),
+              backgroundColor: AppColors.valentineRed,
+            ),
+          );
+        },
+      );
+    });
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -95,6 +125,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
             left: 20,
             right: 20,
             child: SocalButton(
+              isBusy: false,
               press: () {
                 context.router.replace(HomeRoute());
               },
@@ -112,8 +143,12 @@ class _SplashPageState extends ConsumerState<SplashPage> {
             left: 20,
             right: 20,
             child: SocalButton(
+              isBusy: ref.watch(authNotifierProvider).maybeMap(
+                    orElse: () => false,
+                    loading: (_) => true,
+                  ),
               press: () {
-                _nativeGoogleSignIn();
+                ref.read(authNotifierProvider.notifier).nativeGoogleSignIn();
               },
               text: "Connect with Google",
               color: AppColors.chateauGreen,
@@ -141,41 +176,5 @@ class _SplashPageState extends ConsumerState<SplashPage> {
         ],
       ),
     );
-  }
-
-  Future<void> _nativeGoogleSignIn() async {
-    /// Web Client ID that you registered with Google Cloud.
-    const webClientId =
-        '702181279182-2ahbq0uh2big8g9vtcoa2vgi01lf81f2.apps.googleusercontent.com';
-
-    /// iOS Client ID that you registered with Google Cloud.
-    const iosClientId =
-        '702181279182-scdd5b2t8m9hapaktl707tjk7qsfvra2.apps.googleusercontent.com';
-
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: iosClientId,
-      serverClientId: webClientId,
-    );
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
-
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
-    if (idToken == null) {
-      throw 'No ID Token found.';
-    }
-
-    await ref
-        .read(remoteServerConnexionProvider)
-        .instance()
-        .auth
-        .signInWithIdToken(
-          provider: OAuthProvider.google,
-          idToken: idToken,
-          accessToken: accessToken,
-        );
   }
 }

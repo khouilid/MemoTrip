@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:template/core/config/environment.dart';
 
-import '../dtos/user_dto.dart';
+
 import 'user_storage.dart';
 
 class SecureUserStorage implements UserStorage {
@@ -11,10 +12,10 @@ class SecureUserStorage implements UserStorage {
 
   SecureUserStorage(this._storage);
 
-  UserDto? _cachedUser;
+  User? _cachedUser;
 
   @override
-  Future<UserDto?> read() async {
+  Future<User?> read() async {
     if (_cachedUser != null) {
       return _cachedUser;
     }
@@ -25,7 +26,7 @@ class SecureUserStorage implements UserStorage {
     }
 
     try {
-      return _cachedUser = UserDto.fromJson(
+      return _cachedUser = User.fromJson(
         json.decode(jsonResponse) as Map<String, dynamic>,
       );
     } on FormatException {
@@ -34,7 +35,7 @@ class SecureUserStorage implements UserStorage {
   }
 
   @override
-  Future<void> save(UserDto user) async {
+  Future<void> save(User user) async {
     _cachedUser = user;
     await clear();
     await _storage.write(

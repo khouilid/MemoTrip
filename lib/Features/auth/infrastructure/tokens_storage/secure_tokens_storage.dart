@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:template/core/config/environment.dart';
 
-import '../dtos/tokens_dto.dart';
 import 'tokens_storage.dart';
 
 class SecureTokensStorage implements TokensStorage {
@@ -11,10 +10,10 @@ class SecureTokensStorage implements TokensStorage {
 
   SecureTokensStorage(this._storage);
 
-  TokensDto? _cachedTokens;
+  String? _cachedTokens;
 
   @override
-  Future<TokensDto?> read() async {
+  Future<String?> read() async {
     if (_cachedTokens != null) {
       return _cachedTokens;
     }
@@ -25,22 +24,20 @@ class SecureTokensStorage implements TokensStorage {
         return null;
       }
 
-      return _cachedTokens = TokensDto.fromJson(
-        json.decode(jsonResponse) as Map<String, dynamic>,
-      );
+      return _cachedTokens = json.decode(jsonResponse);
     } on FormatException {
       return null;
     }
   }
 
   @override
-  Future<void> save(TokensDto tokens) {
+  Future<void> save(String tokens) {
     _cachedTokens = tokens;
 
     return _storage.write(
       key: encryptKey,
       value: json.encode(
-        tokens.toJson(),
+        tokens,
       ),
     );
   }

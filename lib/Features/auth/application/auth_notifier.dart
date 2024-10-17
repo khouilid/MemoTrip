@@ -1,15 +1,46 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:template/core/domain/failure.dart';
-import 'package:template/Features/user/domain/user_domain.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
+import 'package:template/Features/auth/application/auth_states.dart';
 
-part 'auth_notifier.freezed.dart';
+import '../infrastructure/authenticator.dart';
+import 'auth_notifier.dart';
 
-@freezed
-class AuthState with _$AuthState {
-  const AuthState._();
-  const factory AuthState.initial() = _Initial;
-  const factory AuthState.authenticated(User user) = _Authenticated;
-  const factory AuthState.unauthenticated() = _Unauthenticated;
-  const factory AuthState.loading() = _Loading;
-  const factory AuthState.failure(Failure failure) = _Failure;
+class AuthNotifier extends StateNotifier<AuthStates> {
+  AuthNotifier(this._authenticator) : super(const AuthStates.initial());
+
+  final Authenticator _authenticator;
+
+  Future<void> checkAndUpdateAuthStatus() async {
+    state = const AuthStates.loading();
+    return _authenticator.getSignedInUser().then(
+      (userAndToken) {
+        Logger().i(userAndToken);
+        if (userAndToken?.user != null) {
+          state = AuthStates.authenticated(userAndToken!.user!);
+        } else {
+          state = const AuthStates.unauthenticated();
+        }
+      },
+    );
+  }
+
+  nativeGoogleSignIn() async {
+    state = const AuthStates.loading();
+
+    final failureOrSuccess = await _authenticator.nativeGoogleSignIn();
+
+    state = failureOrSuccess.fold(
+      (l) => AuthStates.failure(l),
+      (r) => AuthStates.authenticated(r.user!),
+    );
+  }
+
+  Future<void> signOut() async {
+    final failureOrSuccess = await _authenticator.signOut();
+
+    state = failureOrSuccess.fold(
+      (l) => AuthStates.failure(l),
+      (r) => const AuthStates.unauthenticated(),
+    );
+  }
 }
