@@ -51,7 +51,7 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                   height: 4,
                   margin: EdgeInsets.only(
                     top: Spacing.base,
-                    bottom: Spacing.large,
+                    bottom: Spacing.base,
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.grey,
@@ -69,16 +69,16 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(
-                              Assets.images.sendIcon.path,
-                              width: 20,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                AppColors.chateauGreen,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                            SizedBox(width: 6),
+                            // SvgPicture.asset(
+                            //   Assets.images.sendIcon.path,
+                            //   width: 20,
+                            //   height: 20,
+                            //   colorFilter: ColorFilter.mode(
+                            //     AppColors.chateauGreen,
+                            //     BlendMode.srcIn,
+                            //   ),
+                            // ),
+                            // SizedBox(width: 6),
                             Text(
                               'New Trip',
                               style: TextStyle(
@@ -273,6 +273,7 @@ class _AddMemorySheetState extends ConsumerState<AddMemorySheet> {
                               SizedBox(height: Spacing.base),
 
                               SocalButton(
+                                  isBusy: null,
                                   textcolor: AppColors.white,
                                   press: () {},
                                   text: "Create Trip",

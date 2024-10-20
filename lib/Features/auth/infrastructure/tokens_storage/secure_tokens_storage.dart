@@ -24,7 +24,7 @@ class SecureTokensStorage implements TokensStorage {
         return null;
       }
 
-      return _cachedTokens = json.decode(jsonResponse);
+      return _cachedTokens = jsonResponse;
     } on FormatException {
       return null;
     }

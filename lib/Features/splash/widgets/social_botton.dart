@@ -7,7 +7,7 @@ class SocalButton extends StatelessWidget {
   final String text;
   final Widget? icon;
   final GestureTapCallback press;
-  final isBusy;
+  final bool? isBusy;
 
   const SocalButton({
     super.key,
@@ -33,10 +33,10 @@ class SocalButton extends StatelessWidget {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
-        onPressed: isBusy ? () {} : press,
+        onPressed: isBusy == true ? () {} : press,
         child: Row(
           children: [
-            isBusy
+            isBusy == true
                 ? SizedBox(
                     height: 20,
                     width: 20,

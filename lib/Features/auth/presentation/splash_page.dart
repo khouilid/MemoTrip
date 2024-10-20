@@ -31,12 +31,14 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 2), () async {
-        // await ref
-        // .read(authNotifierProvider.notifier)
-        // .checkAndUpdateAuthStatus();
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Future.delayed(const Duration(seconds: 2), () async {
+      await ref.read(authNotifierProvider.notifier).getSignedInUser().onError(
+        (error, stackTrace) {
+          Logger().e('Error: $error  $stackTrace');
+        },
+      );
+      // });
     });
 
     _controller = VideoPlayerController.asset(Assets.images.onboarding)
@@ -70,7 +72,8 @@ class _SplashPageState extends ConsumerState<SplashPage> {
         orElse: () {},
         authenticated: (state) {
           ref.watch(userProvider.notifier).state = state.user;
-          Logger().i('User authenticated');
+
+          Logger().i('User authenticated ${state.user}');
           context.router.replace(HomeRoute());
         },
         failure: (state) {

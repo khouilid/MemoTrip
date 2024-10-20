@@ -10,11 +10,11 @@ class AuthNotifier extends StateNotifier<AuthStates> {
 
   final Authenticator _authenticator;
 
-  Future<void> checkAndUpdateAuthStatus() async {
+  Future<void> getSignedInUser() async {
     state = const AuthStates.loading();
     return _authenticator.getSignedInUser().then(
       (userAndToken) {
-        Logger().i(userAndToken);
+        Logger().i('---> $userAndToken');
         if (userAndToken?.user != null) {
           state = AuthStates.authenticated(userAndToken!.user!);
         } else {

@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:template/Features/Home/application/home_notifire.dart';
@@ -11,20 +10,20 @@ import 'package:template/Features/Home/infrastructure/home_remote_datasource.dar
 
 import 'package:template/core/shared/providers.dart';
 
-// final homeRemoteRepositoryProvider = Provider<HomeRemoteDataSource>(
-//   (ref) => HomeRemoteDataSource(ref.watch(dioProvider)),
-// );
+final homeRemoteProvider = Provider<HomeRemoteDataSource>(
+  (ref) => HomeRemoteDataSource(ref.watch(remoteServerConnexionProvider)),
+);
 
-// final homeRepository = Provider<HomeRepository>(
-//   (ref) => HomeRepository(
-//     ref.watch(homeRemoteRepositoryProvider),
-//   ),
-// );
+final homeRepository = Provider<HomeRepository>(
+  (ref) => HomeRepository(
+    ref.watch(homeRemoteProvider),
+  ),
+);
 
-// final homeNotifierProvider =
-//     StateNotifierProvider<HomeStateNotifier, HomeState>(
-//   (ref) => HomeStateNotifier(ref.watch(homeRepository)),
-// );
+final homeNotifierProvider =
+    StateNotifierProvider<HomeStateNotifier, HomeState>(
+  (ref) => HomeStateNotifier(ref.watch(homeRepository)),
+);
 
 // MemoryModel state provider
 final memoryModelProvider = StateProvider<List<MemoryModel>>((ref) => [

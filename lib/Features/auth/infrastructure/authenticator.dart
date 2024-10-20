@@ -61,7 +61,7 @@ class Authenticator with RepositoryHelper {
           session: Session(accessToken: token, tokenType: '', user: user!),
           user: user);
     } on PlatformException {
-      return null;
+      rethrow;
     }
   }
 
